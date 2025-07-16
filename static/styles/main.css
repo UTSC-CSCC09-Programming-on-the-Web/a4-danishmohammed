@@ -1,0 +1,525 @@
+.page-body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f0f2f5;
+  color: #1c1e21;
+}
+
+.page-heading,
+.section-heading,
+.subsection-heading {
+  margin-bottom: 0.5em;
+}
+
+.btn {
+  cursor: pointer;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1877f2;
+  color: white;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #155db8;
+}
+
+.main-header {
+  background-color: white;
+  padding: 0.5em 2em;
+  display: flex;
+  margin-bottom: 1em;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: none;
+}
+
+.btn,
+a.btn,
+.page-footer a {
+  text-decoration: none;
+}
+
+.auth-container .btn {
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.main-header .btn {
+  padding: 8px 12px;
+  margin: 0;
+  border-radius: 6px;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.header-controls .auth-container {
+  margin: 0;
+  padding: 0;
+  display: inline-flex;
+  box-shadow: none;
+  background: none;
+  max-width: none;
+}
+
+.auth-container-form {
+  max-width: 600px;
+  margin: 2em auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1em;
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #eee;
+  justify-content: center;
+  width: auto;
+}
+
+.auth-tab {
+  flex: 0 0 auto;
+  padding: 0.75em 1.5em;
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #777;
+  min-width: auto;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.add-image {
+  background-color: white;
+  padding: 1em 1em;
+  margin: 0.5em auto;
+  max-width: 600px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-image-form label {
+  display: block;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  margin-top: 0.25em;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.form-button {
+  display: block;
+  width: 100%;
+  margin-top: 1.5em;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.gallery {
+  margin: 1em auto;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1em;
+}
+
+.image-display {
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-display .gallery-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+.empty-message {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.gallery-image {
+  animation: fadeIn 0.3s ease;
+}
+
+.image-info-container {
+  margin-top: 1em;
+}
+
+.image-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.image-metadata .image-title {
+  margin: 0 0 0.2em;
+}
+
+.image-metadata .image-author {
+  margin: 0;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.image-metadata .image-date {
+  font-size: 0.8em;
+  color: #888;
+  margin-top: 0.3em;
+}
+
+.icon-button {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon-button:hover {
+  transform: scale(1.1);
+  background-color: transparent;
+}
+
+.delete-icon {
+  background-image: url("../media/delete.png");
+  width: 26px;
+  height: 26px;
+}
+
+.prev-icon {
+  background-image: url("../media/previous.png");
+}
+
+.next-icon {
+  background-image: url("../media/next.png");
+}
+
+.navigation-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding-top: 0.5em;
+  border-top: 1px solid #eee;
+}
+
+.delete-button {
+  background-color: transparent;
+  padding: 0;
+}
+
+.delete-button:hover {
+  background-color: transparent;
+}
+
+.comments-section {
+  margin: 2em auto;
+  max-width: 600px;
+  background-color: white;
+  padding: 1.5em;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.add-comment-container {
+  margin-bottom: 1em;
+}
+
+.comments-container .section-heading {
+  border-top: 1px solid #eee;
+  padding-top: 1em;
+  margin-bottom: 1em;
+}
+
+.add-comment-form .form-input,
+.add-comment-form .form-textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 0.5em 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.add-comment-form .btn {
+  margin-top: 0.5em;
+}
+
+.comment {
+  border-bottom: 1px solid #eee;
+  padding: 1em 0;
+  position: relative;
+}
+
+.comment .comment-author {
+  font-weight: bold;
+  color: #333;
+}
+
+.comment .comment-date {
+  font-size: 0.8em;
+  color: #888;
+  margin-left: 0.5em;
+}
+
+.comment .comment-content {
+  margin: 0.5em 0;
+  font-size: 0.95em;
+  padding-right: 40px;
+}
+
+.comment .delete-comment {
+  position: absolute;
+  top: 1em;
+  right: 0;
+  background-color: transparent;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background-image: url("../media/delete.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 0;
+  margin: 0;
+}
+
+.comment .delete-comment:hover {
+  transform: scale(1.1);
+  background-color: transparent;
+}
+
+.comment-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+}
+
+footer {
+  text-align: center;
+  margin: 3em auto;
+  font-size: 0.9em;
+  color: #888;
+}
+
+.form-row {
+  display: flex;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.form-row label {
+  flex: 1;
+}
+
+.loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #1877f2;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.comment-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 1em 0;
+}
+
+.comments-top-controls {
+  margin-bottom: 1.5em;
+  border-bottom: none;
+}
+
+.no-comments-message {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
+
+.inline-visible {
+  display: inline-block;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.auth-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.username-display {
+  font-weight: 500;
+  color: #333;
+}
+
+.auth-container {
+  max-width: 500px;
+  margin: 2em auto;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 2em;
+}
+
+.auth-tabs {
+  display: flex;
+  margin-bottom: 1.5em;
+  border-bottom: 1px solid #eee;
+  justify-content: center;
+}
+
+.auth-tab {
+  flex: 0 1 auto;
+  padding: 0.75em 1.5em;
+  background: none;
+  border: none;
+  font-size: 1.1em;
+  cursor: pointer;
+  color: #777;
+  min-width: 100px;
+}
+
+.auth-tab.active {
+  color: #1877f2;
+  font-weight: bold;
+  border-bottom: 2px solid #1877f2;
+}
+
+.auth-form-container {
+  margin-top: 1.5em;
+}
+
+.auth-form .form-group {
+  margin-bottom: 1em;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+}
+
+.form-message {
+  padding: 0.75em;
+  margin-bottom: 1em;
+  border-radius: 6px;
+}
+
+.form-message.error {
+  background-color: #ffebee;
+  color: #c62828;
+  border: 1px solid #ef9a9a;
+}
+
+.form-message.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  border: 1px solid #a5d6a7;
+}
+
+.gallery-navigation {
+  background-color: white;
+  border-radius: 10px;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-controls {
+  margin-bottom: 0.5em;
+}
+
+.gallery-owner {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+  margin: 0.5em 0 0 0;
+  color: #1877f2;
+}
+
+.gallery-counter {
+  color: #666;
+  font-size: 0.9em;
+  display: inline-block;
+  min-width: 100px;
+  text-align: center;
+}
+
+.login-message {
+  text-align: center;
+  padding: 1em;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin: 1em 0;
+}
+
+.login-message a {
+  color: #1877f2;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-message a:hover {
+  text-decoration: underline;
+}

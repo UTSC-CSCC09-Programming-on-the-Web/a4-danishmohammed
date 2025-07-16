@@ -1,0 +1,745 @@
+# Hey Copilot, based on my backend, please get me started on a openapi yml file located in static/openapi.yml.
+# You can use the file attached as a guide (used the one from lab 4)
+
+# I'll create a OpenAPI specification for your Web Gallery based on your backend implementation.
+# Here's a starter OpenAPI YAML file that reflects your API endpoints:
+
+# openapi: 3.0.0
+# info:
+#   title: Web Gallery API
+#   version: 1.0.0
+#   description: API for managing images and comments in a web gallery application
+# paths:
+#   /api/images:
+#     post:
+#       summary: Upload a new image to the gallery
+#       tags:
+#         - Images
+#       requestBody:
+#         required: true
+#         content:
+#           multipart/form-data:
+#             schema:
+#               type: object
+#               properties:
+#                 title:
+#                   type: string
+#                   description: Title of the image
+#                   example: Beautiful sunset
+#                 author:
+#                   type: string
+#                   description: Name of the image uploader
+#                   example: John Smith
+#                 image:
+#                   type: string
+#                   format: binary
+#                   description: Image file to upload
+#               required:
+#                 - title
+#                 - author
+#                 - image
+#       responses:
+#         "200":
+#           description: Image uploaded successfully
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Image"
+#         "422":
+#           description: Invalid arguments
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+#               examples:
+#                 missingField:
+#                   summary: Example error for missing required field
+#                   value:
+#                     error: "Invalid arguments: title is required."
+
+#   /api/images/count:
+#     get:
+#       summary: Get the total number of images in the gallery
+#       tags:
+#         - Images
+#       responses:
+#         "200":
+#           description: Successfully returned image count
+#           content:
+#             application/json:
+#               schema:
+#                 type: object
+#                 properties:
+#                   count:
+#                     type: integer
+#                     description: Total number of images
+#                     example: 42
+
+#   /api/images/by-index/{index}:
+#     get:
+#       summary: Retrieve a specific image by its index
+#       tags:
+#         - Images
+#       parameters:
+#         - name: index
+#           in: path
+#           required: true
+#           description: Index of the image to retrieve
+#           schema:
+#             type: integer
+#             example: 0
+#       responses:
+#         "200":
+#           description: Successfully retrieved image
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Image"
+#         "404":
+#           description: Image with specified index not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+#               examples:
+#                 notFound:
+#                   summary: Example error for image not found
+#                   value:
+#                     error: "Image with index 999 does not exist"
+
+#   /api/images/{id}:
+#     get:
+#       summary: Retrieve a specific image by its ID
+#       tags:
+#         - Images
+#       parameters:
+#         - name: id
+#           in: path
+#           required: true
+#           description: ID of the image to retrieve
+#           schema:
+#             type: string
+#             example: "abc123def456"
+#       responses:
+#         "200":
+#           description: Successfully retrieved image
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Image"
+#         "404":
+#           description: Image with specified ID not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+#     delete:
+#       summary: Delete a specific image
+#       tags:
+#         - Images
+#       parameters:
+#         - name: id
+#           in: path
+#           required: true
+#           description: ID of the image to delete
+#           schema:
+#             type: string
+#             example: "abc123def456"
+#       responses:
+#         "200":
+#           description: Image deleted successfully (returns the deleted image object)
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Image"
+#         "404":
+#           description: Image with specified ID not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+
+#   /api/comments:
+#     post:
+#       summary: Add a new comment to an image
+#       tags:
+#         - Comments
+#       requestBody:
+#         required: true
+#         content:
+#           application/json:
+#             schema:
+#               type: object
+#               properties:
+#                 imageId:
+#                   type: string
+#                   description: ID of the image to comment on
+#                   example: "abc123def456"
+#                 author:
+#                   type: string
+#                   description: Name of the commenter
+#                   example: "Jane Doe"
+#                 content:
+#                   type: string
+#                   description: Content of the comment
+#                   example: "What a beautiful shot!"
+#               required:
+#                 - imageId
+#                 - author
+#                 - content
+#       responses:
+#         "200":
+#           description: Comment added successfully
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Comment"
+#         "404":
+#           description: Image to comment on not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+#         "422":
+#           description: Invalid arguments
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+
+#   /api/comments/{id}:
+#     get:
+#       summary: Retrieve a specific comment by its ID
+#       tags:
+#         - Comments
+#       parameters:
+#         - name: id
+#           in: path
+#           required: true
+#           description: ID of the comment to retrieve
+#           schema:
+#             type: string
+#             example: "comment123"
+#       responses:
+#         "200":
+#           description: Successfully retrieved comment
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Comment"
+#         "404":
+#           description: Comment with specified ID not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+#     delete:
+#       summary: Delete a specific comment
+#       tags:
+#         - Comments
+#       parameters:
+#         - name: id
+#           in: path
+#           required: true
+#           description: ID of the comment to delete
+#           schema:
+#             type: string
+#             example: "comment123"
+#       responses:
+#         "200":
+#           description: Comment deleted successfully (returns the deleted comment object)
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Comment"
+#         "404":
+#           description: Comment with specified ID not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+
+#   /api/comments/image/{imageId}:
+#     get:
+#       summary: Retrieve comments for a specific image
+#       tags:
+#         - Comments
+#       parameters:
+#         - name: imageId
+#           in: path
+#           required: true
+#           description: ID of the image to get comments for
+#           schema:
+#             type: string
+#             example: "abc123def456"
+#         - name: page
+#           in: query
+#           description: Page number for pagination
+#           required: false
+#           schema:
+#             type: integer
+#             default: 0
+#             example: 1
+#         - name: limit
+#           in: query
+#           description: Number of comments per page
+#           required: false
+#           schema:
+#             type: integer
+#             default: 10
+#             example: 5
+#       responses:
+#         "200":
+#           description: Successfully retrieved comments
+#           content:
+#             application/json:
+#               schema:
+#                 type: array
+#                 items:
+#                   $ref: "#/components/schemas/Comment"
+#         "404":
+#           description: Image with specified ID not found
+#           content:
+#             application/json:
+#               schema:
+#                 $ref: "#/components/schemas/Error"
+
+# components:
+#   schemas:
+#     Image:
+#       type: object
+#       properties:
+#         id:
+#           type: string
+#           description: The unique identifier for the image
+#           example: "abc123def456"
+#         title:
+#           type: string
+#           description: The title of the image
+#           example: "Sunset at the beach"
+#         author:
+#           type: string
+#           description: The name of the image uploader
+#           example: "John Smith"
+#         url:
+#           type: string
+#           description: URL to access the image
+#           example: "/uploads/abc123def456"
+#         createdAt:
+#           type: string
+#           format: date-time
+#           description: The timestamp when the image was uploaded
+#           example: "2023-06-15T14:30:00Z"
+#         updatedAt:
+#           type: string
+#           format: date-time
+#           description: The timestamp when the image was last updated
+#           example: "2023-06-15T14:30:00Z"
+
+#     Comment:
+#       type: object
+#       properties:
+#         id:
+#           type: string
+#           description: The unique identifier for the comment
+#           example: "comment123"
+#         imageId:
+#           type: string
+#           description: The ID of the image this comment belongs to
+#           example: "abc123def456"
+#         author:
+#           type: string
+#           description: The name of the commenter
+#           example: "Jane Doe"
+#         content:
+#           type: string
+#           description: The content of the comment
+#           example: "What a beautiful shot!"
+#         createdAt:
+#           type: string
+#           format: date-time
+#           description: The timestamp when the comment was created
+#           example: "2023-06-15T15:45:00Z"
+#         updatedAt:
+#           type: string
+#           format: date-time
+#           description: The timestamp when the comment was last updated
+#           example: "2023-06-15T15:45:00Z"
+
+#     Error:
+#       type: object
+#       properties:
+#         error:
+#           type: string
+#           description: Error message
+#           example: "Resource not found"
+
+openapi: 3.0.0
+info:
+  title: Web Gallery API
+  version: 1.0.0
+  description: API for managing images and comments in a web gallery application.
+paths:
+  /api/images:
+    post:
+      summary: Upload a new image to the gallery
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Title of the image
+                  example: Beautiful sunset
+                author:
+                  type: string
+                  description: Name of the image uploader
+                  example: John Smith
+                image:
+                  type: string
+                  format: binary
+                  description: Image file to upload
+              required:
+                - title
+                - author
+                - image
+      responses:
+        "201":
+          description: Image uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "400":
+          description: Invalid arguments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                missingField:
+                  summary: Example error for missing required field
+                  value:
+                    error: "Invalid arguments: title is required."
+
+  /api/images/count:
+    get:
+      summary: Get the total number of images in the gallery
+      tags:
+        - Images
+      responses:
+        "200":
+          description: Successfully returned image count
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  count:
+                    type: integer
+                    description: Total number of images
+                    example: 42
+
+  /api/images/by-index/{index}:
+    get:
+      summary: Retrieve a specific image by its index
+      tags:
+        - Images
+      parameters:
+        - name: index
+          in: path
+          required: true
+          description: Index of the image to retrieve
+          schema:
+            type: integer
+            example: 0
+      responses:
+        "200":
+          description: Successfully retrieved image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "404":
+          description: Image or file not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                notFound:
+                  summary: Example error for image not found
+                  value:
+                    error: "Image with index 999 does not exist"
+
+  /api/images/{id}:
+    get:
+      summary: Retrieve a specific image by its ID
+      tags:
+        - Images
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the image to retrieve
+          schema:
+            type: string
+            example: "abc123def456"
+      responses:
+        "200":
+          description: Successfully retrieved image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "404":
+          description: Image or file not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a specific image
+      tags:
+        - Images
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the image to delete
+          schema:
+            type: string
+            example: "abc123def456"
+      responses:
+        "200":
+          description: Image deleted successfully (returns the deleted image object)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Image"
+        "404":
+          description: Image with specified ID not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/comments:
+    post:
+      summary: Add a new comment to an image
+      tags:
+        - Comments
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                imageId:
+                  type: string
+                  description: ID of the image to comment on
+                  example: "abc123def456"
+                author:
+                  type: string
+                  description: Name of the commenter
+                  example: "Jane Doe"
+                content:
+                  type: string
+                  description: Content of the comment
+                  example: "What a beautiful shot!"
+              required:
+                - imageId
+                - author
+                - content
+      responses:
+        "200":
+          description: Comment added successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "404":
+          description: Image to comment on not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "422":
+          description: Invalid arguments
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/comments/{id}:
+    get:
+      summary: Retrieve a specific comment by its ID
+      tags:
+        - Comments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the comment to retrieve
+          schema:
+            type: string
+            example: "comment123"
+      responses:
+        "200":
+          description: Successfully retrieved comment
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "404":
+          description: Comment with specified ID not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a specific comment
+      tags:
+        - Comments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID of the comment to delete
+          schema:
+            type: string
+            example: "comment123"
+      responses:
+        "200":
+          description: Comment deleted successfully (returns the deleted comment object)
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+        "404":
+          description: Comment with specified ID not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /api/comments/image/{imageId}:
+    get:
+      summary: Retrieve comments for a specific image
+      tags:
+        - Comments
+      parameters:
+        - name: imageId
+          in: path
+          required: true
+          description: ID of the image to get comments for
+          schema:
+            type: string
+            example: "abc123def456"
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 0
+            example: 1
+        - name: limit
+          in: query
+          description: Number of comments per page
+          required: false
+          schema:
+            type: integer
+            default: 10
+            example: 5
+      responses:
+        "200":
+          description: Successfully retrieved comments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+        "404":
+          description: Image with specified ID not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+components:
+  schemas:
+    Image:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the image
+          example: "abc123def456"
+        title:
+          type: string
+          description: The title of the image
+          example: "Sunset at the beach"
+        author:
+          type: string
+          description: The name of the image uploader
+          example: "John Smith"
+        url:
+          type: string
+          description: URL to access the image
+          example: "/uploads/abc123def456"
+        createdAt:
+          type: string
+          format: date-time
+          description: The timestamp when the image was uploaded
+          example: "2023-06-15T14:30:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the image was last updated
+          example: "2023-06-15T14:30:00Z"
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the comment
+          example: "comment123"
+        imageId:
+          type: string
+          description: The ID of the image this comment belongs to
+          example: "abc123def456"
+        author:
+          type: string
+          description: The name of the commenter
+          example: "Jane Doe"
+        content:
+          type: string
+          description: The content of the comment
+          example: "What a beautiful shot!"
+        createdAt:
+          type: string
+          format: date-time
+          description: The timestamp when the comment was created
+          example: "2023-06-15T15:45:00Z"
+        updatedAt:
+          type: string
+          format: date-time
+          description: The timestamp when the comment was last updated
+          example: "2023-06-15T15:45:00Z"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+          example: "Resource not found"

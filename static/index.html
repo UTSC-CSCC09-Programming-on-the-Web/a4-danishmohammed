@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Web Gallery</title>
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+    <link href="styles/cols.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="page-body">
+    <header class="main-header">
+      <h1 class="page-heading">Web Gallery</h1>
+      <div class="header-controls">
+        <button id="toggle-add-image" class="btn hidden" data-state="hidden">
+          Show Add Image
+        </button>
+        <div class="auth-container"></div>
+      </div>
+    </header>
+
+    <section id="add-image-section" class="add-image hidden">
+      <form id="add-image-form" class="add-image-form">
+        <div class="form-row">
+          <label>
+            Title:
+            <input type="text" id="image-title" class="form-input" />
+          </label>
+        </div>
+        <label>
+          Upload Image:
+          <input
+            type="file"
+            id="image-file"
+            name="picture"
+            class="form-input"
+            accept="image/*"
+            required
+          />
+        </label>
+        <button type="submit" class="btn form-button">Add to Gallery</button>
+      </form>
+    </section>
+
+    <section class="gallery-navigation">
+      <div class="navigation-controls gallery-controls">
+        <button
+          id="prev-gallery"
+          class="icon-button prev-icon"
+          title="Previous gallery"
+        ></button>
+        <span id="gallery-counter" class="gallery-counter"></span>
+        <button
+          id="next-gallery"
+          class="icon-button next-icon"
+          title="Next gallery"
+        ></button>
+      </div>
+      <h3 id="gallery-owner" class="gallery-owner"></h3>
+    </section>
+
+    <main id="gallery" class="gallery">
+      <div id="image-display" class="image-display"></div>
+
+      <div id="image-info-container" class="image-info-container hidden">
+        <div class="image-info">
+          <div class="image-metadata">
+            <h3
+              id="image-title-display"
+              class="image-title subsection-heading"
+            ></h3>
+            <p id="image-author-display" class="image-author"></p>
+            <p id="image-date-display" class="image-date"></p>
+          </div>
+          <button
+            id="delete-image"
+            class="icon-button delete-icon hidden"
+            title="Delete image"
+          ></button>
+        </div>
+
+        <div class="navigation-controls">
+          <button
+            id="prev-image"
+            class="icon-button prev-icon"
+            title="Previous image"
+          ></button>
+          <span id="image-counter" class="image-counter"></span>
+          <button
+            id="next-image"
+            class="icon-button next-icon"
+            title="Next image"
+          ></button>
+        </div>
+      </div>
+    </main>
+
+    <section id="comments-section" class="comments-section hidden">
+      <div class="add-comment-container">
+        <h2 class="section-heading">Add Comment</h2>
+        <form id="add-comment-form" class="add-comment-form">
+          <textarea
+            id="comment-text"
+            class="form-textarea"
+            placeholder="Your comment"
+          ></textarea>
+          <button type="submit" class="btn">Post Comment</button>
+        </form>
+      </div>
+
+      <div class="comments-container">
+        <h2 class="section-heading">Comments</h2>
+
+        <div
+          id="comment-top-pagination"
+          class="comment-pagination comments-top-controls"
+        ></div>
+
+        <div id="comment-list" class="comment-list"></div>
+
+        <div id="comment-pagination" class="comment-pagination"></div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      <a href="credits.html">Credits Page</a>
+    </footer>
+    <script src="js/meact.js"></script>
+    <script src="js/api-service.js"></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>

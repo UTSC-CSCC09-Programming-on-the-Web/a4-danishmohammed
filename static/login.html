@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Web Gallery - Login</title>
+    <link href="styles/main.css" rel="stylesheet" type="text/css" />
+    <link href="styles/cols.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body class="page-body">
+    <header class="main-header">
+      <h1 class="page-heading">Web Gallery</h1>
+      <a href="index.html" class="btn">Back to Gallery</a>
+    </header>
+
+    <div class="auth-container-form">
+      <div class="auth-tabs">
+        <button id="login-tab" class="auth-tab active">Login</button>
+        <button id="signup-tab" class="auth-tab">Sign Up</button>
+      </div>
+
+      <div id="login-form-container" class="auth-form-container visible">
+        <h2 class="section-heading">Login to your account</h2>
+        <form id="login-form" class="auth-form">
+          <div class="form-message error hidden" id="login-error"></div>
+          <div class="form-message success hidden" id="login-success"></div>
+          <div class="form-group">
+            <label for="login-username">Username</label>
+            <input
+              type="text"
+              id="login-username"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="login-password">Password</label>
+            <input
+              type="password"
+              id="login-password"
+              class="form-input"
+              required
+            />
+          </div>
+          <button type="submit" class="btn form-button">Login</button>
+        </form>
+      </div>
+
+      <div id="signup-form-container" class="auth-form-container hidden">
+        <h2 class="section-heading">Create a new account</h2>
+        <form id="signup-form" class="auth-form">
+          <div class="form-message error hidden" id="signup-error"></div>
+          <div class="form-message success hidden" id="signup-success"></div>
+          <div class="form-group">
+            <label for="signup-username">Username</label>
+            <input
+              type="text"
+              id="signup-username"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="signup-password">Password</label>
+            <input
+              type="password"
+              id="signup-password"
+              class="form-input"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="signup-confirm-password">Confirm Password</label>
+            <input
+              type="password"
+              id="signup-confirm-password"
+              class="form-input"
+              required
+            />
+          </div>
+          <button type="submit" class="btn form-button">Sign Up</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="page-footer">
+      <a href="credits.html">Credits Page</a>
+    </footer>
+    <script src="js/meact.js"></script>
+    <script src="js/api-service.js"></script>
+    <script src="js/login.js"></script>
+  </body>
+</html>

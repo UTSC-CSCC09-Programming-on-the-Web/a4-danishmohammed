@@ -1,0 +1,26 @@
+{
+  "name": "webgallery",
+  "version": "5.0.0",
+  "description": "",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start:dev": "nodemon app.js",
+    "format": "npx prettier --write ."
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^1.20.1",
+    "express": "^4.19.2",
+    "express-session": "^1.18.1",
+    "multer": "^1.4.5-lts.1",
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22",
+    "prettier": "^2.8.8"
+  }
+}
