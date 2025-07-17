@@ -1,0 +1,40 @@
+version: "3.7"
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+
+  nginx-proxy-acme:
+    image: nginxproxy/acme-companion
+    container_name: nginx-proxy-acme
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./certs:/etc/nginx/certs
+      - ./vhost:/etc/nginx/vhost.d
+      - ./html:/usr/share/nginx/html
+      - ./acme:/etc/acme.sh
+    environment:
+      - DEFAULT_EMAIL=danish.mohammed@mail.utoronto.ca
+      - NGINX_PROXY_CONTAINER=nginx-proxy
+
+  webapp:
+    build: .
+    container_name: webapp
+    restart: always
+    expose:
+      - "3000"
+    environment:
+      - VIRTUAL_HOST=webgallery.danishmohammed.ca
+      - LETSENCRYPT_HOST=webgallery.danishmohammed.ca
+      - LETSENCRYPT_EMAIL=danish.mohammed@mail.utoronto.ca
