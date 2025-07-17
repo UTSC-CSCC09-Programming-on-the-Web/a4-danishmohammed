@@ -531,12 +531,40 @@
         .addEventListener("click", handlePaginationClick);
 
       function handlePaginationClick(e) {
-        if (
-          e.target.classList.contains("page-button") &&
-          !e.target.classList.contains("active")
-        ) {
-          const pageNumber = parseInt(e.target.getAttribute("data-page"), 10);
-          setCommentPage(pageNumber);
+        if (e.target.classList.contains("prev-icon")) {
+          const currentPage = getCommentPage();
+          const currentImage = getCurrentImage();
+          if (!currentImage) return;
+
+          apiService
+            .getCommentsForImage(currentImage.imageId, 0, 10)
+            .then((response) => {
+              const totalPages = Math.ceil(response.totalCount / 10);
+
+              if (totalPages > 1) {
+                const newPage =
+                  currentPage === 0 ? totalPages - 1 : currentPage - 1;
+                setCommentPage(newPage);
+                renderComments();
+              }
+            });
+        } else if (e.target.classList.contains("next-icon")) {
+          const currentPage = getCommentPage();
+          const currentImage = getCurrentImage();
+          if (!currentImage) return;
+
+          apiService
+            .getCommentsForImage(currentImage.imageId, 0, 10)
+            .then((response) => {
+              const totalPages = Math.ceil(response.totalCount / 10);
+
+              if (totalPages > 1) {
+                const newPage =
+                  currentPage === totalPages - 1 ? 0 : currentPage + 1;
+                setCommentPage(newPage);
+                renderComments();
+              }
+            });
         }
       }
     }
@@ -651,7 +679,7 @@
     ) {
       paginationContainer.innerHTML = "";
 
-      if (totalComments === 0) {
+      if (totalComments <= commentsPerPage) {
         return;
       }
 
@@ -660,13 +688,11 @@
         Math.ceil(totalComments / commentsPerPage)
       );
 
-      for (let i = 0; i < totalPages; i++) {
-        const button = document.createElement("button");
-        button.className = `page-button${i === currentPage ? " active" : ""}`;
-        button.textContent = i + 1;
-        button.setAttribute("data-page", i);
-        paginationContainer.appendChild(button);
-      }
+      paginationContainer.innerHTML = `
+        <button class="icon-button prev-icon" title="Previous page"></button>
+        <span class="page-info">Page ${currentPage + 1} of ${totalPages}</span>
+        <button class="icon-button next-icon" title="Next page"></button>
+      `;
     }
 
     function renderCurrentImage() {
