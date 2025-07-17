@@ -13,6 +13,22 @@ commentsRouter.get("/image/:imageId", isAuthenticated, async (req, res) => {
   const page = parseInt(req.query.page) || 0;
   const limit = parseInt(req.query.limit) || 10;
 
+  if (isNaN(parseInt(imageId, 10))) {
+    return res.status(422).json({ error: "Invalid image ID" });
+  }
+
+  if (req.query.page !== undefined && isNaN(parseInt(req.query.page, 10))) {
+    return res.status(422).json({ error: "Page parameter must be a number" });
+  }
+
+  if (req.query.limit !== undefined && isNaN(parseInt(req.query.limit, 10))) {
+    return res.status(422).json({ error: "Limit parameter must be a number" });
+  }
+
+  if (page < 0) {
+    return res.status(422).json({ error: "Page must be non-negative" });
+  }
+
   try {
     const image = await Image.findByPk(imageId);
     if (!image) {
@@ -48,8 +64,26 @@ commentsRouter.get("/image/:imageId", isAuthenticated, async (req, res) => {
 commentsRouter.post("/", isAuthenticated, async (req, res) => {
   const { imageId, content } = req.body;
 
+  if (typeof content !== "string") {
+    return res.status(422).json({ error: "Content must be a string" });
+  }
+
+  if (typeof imageId !== "number" && typeof imageId !== "string") {
+    return res
+      .status(422)
+      .json({ error: "Image ID must be a number or string" });
+  }
+
+  if (isNaN(parseInt(imageId, 10))) {
+    return res.status(422).json({ error: "Invalid image ID" });
+  }
+
   if (!imageId || !content) {
-    return res.status(400).json({ error: "Missing required fields" });
+    return res.status(422).json({ error: "Missing required fields" });
+  }
+
+  if (content.trim().length === 0) {
+    return res.status(422).json({ error: "Content cannot be empty" });
   }
 
   try {
@@ -86,6 +120,12 @@ commentsRouter.post("/", isAuthenticated, async (req, res) => {
 });
 
 commentsRouter.delete("/:commentId", canDeleteComment, async (req, res) => {
+  const commentId = req.params.commentId;
+
+  if (isNaN(parseInt(commentId, 10))) {
+    return res.status(422).json({ error: "Invalid comment ID" });
+  }
+
   try {
     const comment = await Comment.findByPk(req.params.commentId);
 

@@ -512,6 +512,17 @@
             apiService
               .deleteComment(commentId)
               .then(() => {
+                const currentPage = getCommentPage();
+                return apiService.getCommentsForImage(
+                  currentImage.imageId,
+                  currentPage,
+                  10
+                );
+              })
+              .then((response) => {
+                if (response.comments.length === 0 && getCommentPage() > 0) {
+                  setCommentPage(0);
+                }
                 renderComments();
               })
               .catch(() => {
@@ -688,11 +699,21 @@
         Math.ceil(totalComments / commentsPerPage)
       );
 
-      paginationContainer.innerHTML = `
-        <button class="icon-button prev-icon" title="Previous page"></button>
-        <span class="page-info">Page ${currentPage + 1} of ${totalPages}</span>
-        <button class="icon-button next-icon" title="Next page"></button>
-      `;
+      const prevButton = document.createElement("button");
+      prevButton.className = "icon-button prev-icon";
+      prevButton.title = "Previous page";
+
+      const pageInfo = document.createElement("span");
+      pageInfo.className = "page-info";
+      pageInfo.textContent = `Page ${currentPage + 1} of ${totalPages}`;
+
+      const nextButton = document.createElement("button");
+      nextButton.className = "icon-button next-icon";
+      nextButton.title = "Next page";
+
+      paginationContainer.appendChild(prevButton);
+      paginationContainer.appendChild(pageInfo);
+      paginationContainer.appendChild(nextButton);
     }
 
     function renderCurrentImage() {

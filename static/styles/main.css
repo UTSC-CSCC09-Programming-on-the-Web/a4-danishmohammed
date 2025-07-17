@@ -332,7 +332,7 @@ a.btn,
   margin-top: 1em;
 }
 
-footer {
+.page-footer {
   text-align: center;
   margin: 3em auto;
   font-size: 0.9em;
@@ -557,4 +557,57 @@ footer {
 
 .login-message a:hover {
   text-decoration: underline;
+}
+
+.loading-state {
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-state::before {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #1877f2;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.loading-state > * {
+  display: none;
+}
+
+.error-state {
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-message {
+  text-align: center;
+  color: #d32f2f;
+  font-style: italic;
+  padding: 1em;
+  background-color: #ffebee;
+  border: 1px solid #ffcdd2;
+  border-radius: 6px;
+  margin: 1em 0;
+}
+
+.loading-state::before {
+  content: "";
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #1877f2;
+  animation: spin 1s ease-in-out infinite;
 }

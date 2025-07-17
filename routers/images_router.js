@@ -33,8 +33,16 @@ imagesRouter.post(
     const { title } = req.body;
     const file = req.file;
 
+    if (typeof title !== "string") {
+      return res.status(422).json({ error: "Title must be a string" });
+    }
+
     if (!title || !file) {
-      return res.status(400).json({ error: "Missing title or image file" });
+      return res.status(422).json({ error: "Missing title or image file" });
+    }
+
+    if (title.trim().length === 0) {
+      return res.status(422).json({ error: "Title cannot be empty" });
     }
 
     try {
@@ -89,8 +97,16 @@ imagesRouter.get("/users/:userId/by-index/:index", async (req, res) => {
   const userId = req.params.userId;
   const index = parseInt(req.params.index, 10);
 
+  if (isNaN(parseInt(userId, 10))) {
+    return res.status(422).json({ error: "Invalid user ID" });
+  }
+
   if (isNaN(index)) {
-    return res.status(400).json({ error: "Invalid index" });
+    return res.status(422).json({ error: "Invalid index parameter" });
+  }
+
+  if (index < 0) {
+    return res.status(422).json({ error: "Index must be non-negative" });
   }
 
   try {
@@ -128,6 +144,10 @@ imagesRouter.get("/users/:userId/by-index/:index", async (req, res) => {
 imagesRouter.get("/users/:userId/count", async (req, res) => {
   const userId = req.params.userId;
 
+  if (isNaN(parseInt(userId, 10))) {
+    return res.status(422).json({ error: "Invalid user ID" });
+  }
+
   try {
     const count = await Image.count({
       where: {
@@ -145,7 +165,11 @@ imagesRouter.get("/users/by-index/:index", async (req, res) => {
   const index = parseInt(req.params.index, 10);
 
   if (isNaN(index)) {
-    return res.status(400).json({ error: "Invalid index" });
+    return res.status(422).json({ error: "Invalid index parameter" });
+  }
+
+  if (index < 0) {
+    return res.status(422).json({ error: "Index must be non-negative" });
   }
 
   try {
@@ -171,8 +195,14 @@ imagesRouter.get("/users/by-index/:index", async (req, res) => {
 });
 
 imagesRouter.get("/:id/file", async (req, res) => {
+  const imageId = req.params.id;
+
+  if (isNaN(parseInt(imageId, 10))) {
+    return res.status(422).json({ error: "Invalid image ID" });
+  }
+
   try {
-    const image = await Image.findByPk(req.params.id);
+    const image = await Image.findByPk(imageId);
 
     if (!image || !image.file) {
       return res.status(404).json({ error: "Image or file not found" });
@@ -186,6 +216,12 @@ imagesRouter.get("/:id/file", async (req, res) => {
 });
 
 imagesRouter.delete("/:imageId", isAuthenticated, async (req, res) => {
+  const imageId = req.params.imageId;
+
+  if (isNaN(parseInt(imageId, 10))) {
+    return res.status(422).json({ error: "Invalid image ID" });
+  }
+
   try {
     const image = await Image.findByPk(req.params.imageId);
 
@@ -216,7 +252,11 @@ imagesRouter.get("/by-index/:index", async (req, res) => {
   const index = parseInt(req.params.index, 10);
 
   if (isNaN(index)) {
-    return res.status(400).json({ error: "Invalid index" });
+    return res.status(422).json({ error: "Invalid index parameter" });
+  }
+
+  if (index < 0) {
+    return res.status(422).json({ error: "Index must be non-negative" });
   }
 
   try {

@@ -11,8 +11,20 @@ const saltRounds = 10;
 usersRouter.post("/signup", async (req, res) => {
   const { username, password } = req.body;
 
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res
+      .status(422)
+      .json({ error: "Username and password must be strings" });
+  }
+
   if (!username || !password) {
-    return res.status(400).json({ error: "Username and password required" });
+    return res.status(422).json({ error: "Username and password required" });
+  }
+
+  if (username.trim().length === 0 || password.length === 0) {
+    return res
+      .status(422)
+      .json({ error: "Username and password cannot be empty" });
   }
 
   const existingUser = await User.findOne({
@@ -47,6 +59,18 @@ usersRouter.post("/signup", async (req, res) => {
 });
 
 usersRouter.post("/signin", async (req, res) => {
+  const { username, password } = req.body;
+
+  if (typeof username !== "string" || typeof password !== "string") {
+    return res
+      .status(422)
+      .json({ error: "Username and password must be strings" });
+  }
+
+  if (!username || !password) {
+    return res.status(422).json({ error: "Username and password required" });
+  }
+
   const user = await User.findOne({
     where: {
       username: req.body.username,
@@ -58,7 +82,6 @@ usersRouter.post("/signin", async (req, res) => {
   }
 
   const hash = user.password;
-  const password = req.body.password;
 
   if (!bcrypt.compareSync(password, hash)) {
     return res.status(401).json({ error: "Incorrect username or password." });
